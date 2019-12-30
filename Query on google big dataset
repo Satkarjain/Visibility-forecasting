@@ -1,0 +1,21 @@
+SELECT
+  TIMESTAMP(CONCAT(year,"-",mo,"-",da)) AS date,
+  AVG(IF (temp=9999.9, 0, temp)) AS temperature,
+  MIN(IF (temp=9999.9, 0, min)) AS temperature_min,
+  MAX(IF (temp=9999.9, 0, max)) AS temperature_max,
+  AVG(IF (visib=999.9, 0, visib)) AS visibility,
+  AVG(IF (gust=999.9, 0, gust)) AS wind_gust,
+  AVG(IF (wdsp="999.9", 0, CAST(wdsp AS Float64))) AS wind_speed,
+  AVG(IF (prcp=99.99, 0, prcp)) AS precipitation,
+  AVG(IF (sndp=999.9, 0, sndp)) AS snow_depth
+FROM
+  `bigquery-public-data.noaa_gsod.gsod20*`
+WHERE
+  CAST(YEAR AS INT64) > 2010
+  AND (stn="424520") 
+GROUP BY
+  date
+ORDER BY
+  date
+  
+  The station id used is of Kota (Raj.)
