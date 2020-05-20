@@ -7,15 +7,15 @@ SELECT
   AVG(IF (gust=999.9, 0, gust)) AS wind_gust,
   AVG(IF (wdsp="999.9", 0, CAST(wdsp AS Float64))) AS wind_speed,
   AVG(IF (prcp=99.99, 0, prcp)) AS precipitation,
-  AVG(IF (sndp=999.9, 0, sndp)) AS snow_depth
+  AVG(IF (sndp=999.9, 0, sndp)) AS snow_depth,
+  AVG(IF (slp =9999.9, 0, slp)) AS Pressure,
+  AVG(IF (dewp =9999.9, 0, dewp)) AS Dewpoint
 FROM
   `bigquery-public-data.noaa_gsod.gsod20*`
 WHERE
-  CAST(YEAR AS INT64) > 2010
+  CAST(YEAR AS INT64) > 2000
   AND (stn="424520") 
 GROUP BY
   date
 ORDER BY
   date
-  
-  The station id used is of Kota (Raj.)
